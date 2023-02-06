@@ -1,0 +1,37 @@
+1. Write the "Dockerfile". As per our requirement with source code.
+2. Build the docker file.
+syntex:
+$ docker build -t image_name docker_file_location
+
+e.g:
+$ docker build -t test-1 .
+
+3. Create container from that image(test-1).
+$ docker run -d -p 8080:80 test-1
+
+4. Check the container.
+$ docker container ls
+
+5. Curl the container for checking it is working or not on defined port.
+$ curl localhost:8080
+
+6. Check the container logs.
+$ docker container logs container_ID
+
+7. Inspect the container for checking attribute.
+$ docker inspect container container_id
+
+8. Stopping a running image
+$ docker stop <id-of-image>
+
+9. Starting an image which is not running
+$ docker start <id-of-image>
+
+10. Removing an image from docker
+$ docker rmi <id-of-image>
+
+11. Removing a container from docker
+$ docker rm <id-of-container>
+
+12. Command to execute a container/ logging in a container.
+$ docker exec -it container_id /bin/bash

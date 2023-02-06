@@ -1,0 +1,28 @@
+=> Describe how image deletion works
+
+-> Process to deletion an image:
+1. First you need to list all image and get the image IDs, Image name and other details.
+$ docker images -a
+$docker image ls
+
+After that you need to select those image you want to delete. That image IDs
+$ docker rmi -f <your-image-id>
+or, 
+$ docker image rm -f <your-image-id>
+
+=> Utilize a registry to store an image
+
+-> I have created a docker hub registry and stored my test image there.
+
+
+=> Display layers of a Docker image
+
+$ docker history image_id/image_name
+$ docker image history image_id/image_name
+$ docker history --no-trunc image_id/image_name
+
+=> Modify an image to a single layer
+
+
+Describe how image layers work
+Describe how volumes are used with Docker for persistent storage
