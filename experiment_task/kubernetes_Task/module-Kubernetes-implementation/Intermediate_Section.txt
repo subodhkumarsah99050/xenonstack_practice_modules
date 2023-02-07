@@ -1,0 +1,54 @@
+=> Volumes in Kubernetes
+
+-> On-disk files in a container are ephemeral, which presents some problems for non-trivial applications when running in containers. One problem is the loss of files when a container crashes. The kubelet restarts the container but with a clean state. A second problem occurs when sharing files between containers running together in a Pod. The Kubernetes volume abstraction solves both of these problems. 
+
+-> Types of volumes:
+
+--> AWS EBS CSI migration complete 
+--> azureDisk CSI migration
+--> emptyDir
+--> gitRepo
+--> hostPath
+--> nfs 
+
+
+=> Persistent volumes and Claims
+
+-> Persistent volume: A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. It is a resource in the cluster just like a node is a cluster resource. PVs are volume plugins like Volumes, but have a lifecycle independent of any individual Pod that uses the PV. This API object captures the details of the implementation of the storage, be that NFS, iSCSI, or a cloud-provider-specific storage system.
+-> Persistent volumes Claims: A PersistentVolumeClaim (PVC) is a request for storage by a user.
+--> Explanation: It is similar to a Pod. Pods consume node resources and PVCs consume PV resources. Pods can request specific levels of resources (CPU and Memory). Claims can request specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany or ReadWriteMany, see AccessModes).
+
+Referance: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#:~:text=PVs%20are%20volume%20plugins%20like,for%20storage%20by%20a%20user.
+
+
+=> Configmaps and Secrets
+
+-> Configmaps: A ConfigMap is an API object used to store non-confidential data in key-value pairs. Pods can consume ConfigMaps as environment variables, command-line arguments, or as configuration files in a volume.
+-> Secrets: A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
+
+Referance for Secret: https://kubernetes.io/docs/concepts/configuration/secret/
+
+
+=> Resource requirement definition for Pods
+
+-> When you specify a Pod, you can optionally specify how much of each resource a container needs. The most common resources to specify are CPU and memory (RAM)
+
+e.g:
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+
+
+Referance: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#:~:text=Both%20containers%20are%20defined%20with,CPU%20and%20256MiB%20of%20memory.
+
+
+=> LivenessProbes and ReadinessProbes
+
+-> LivenessProbes: 
+
+
+-> ReadinessProbes: 

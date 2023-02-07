@@ -1,0 +1,79 @@
+=> Containerization v/s Virtualization
+
+-> Technology
+
+Virtualization: One physical machine has multiple OSs residing on it and appears as multiple machines.
+Containerization: The application developed in a host environment with same OS and the same machine executes flawlessly on multiple different environments.
+
+-> Speed of working
+
+Virtualization: VMs being a virtual copy of the host server on its own operating system, VMs are resource-heavy, hence slower.
+Containerization: Containers are faster.
+
+-> Size
+
+Virtualization: Larger
+Containerization: Smaller
+
+-> Component that Virtualizes and the one being virtualized
+
+Virtualization: Hypervisors virtualize the underlying hardware (use of the same hardware).
+Containerization: Containers virtualize the operating system (use of the same OS).
+
+-> Cost of implementation
+
+Virtualization: Higher
+Containerization: Lower
+
+
+=> Kubernetes overview
+
+-> Kubernetes is a portable, extensible, open source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.
+
+
+=> Problems solved by Kubernetes
+
+-> Users expect applications and services to be available 24/7
+When you work with a container orchestrator like Kubernetes, you can schedule nodes or processes across many machines, many different times. This allows you to lose a node or process without seeing a disruption in uptime of your service.
+
+-> Developers expect to deploy code multiple times a day with no downtime
+If you are a systems operator, developers want you to give them the opportunity to deploy code multiple times a day. Kubernetes allows you to implement smart processes and schemes for rolling updates without downtime.
+
+-> Fault tolerant and self-healing infrastructure improves reliability
+Kubernetes provides reliability. If a container or entire node goes down, resources or a single process will be rescheduled by Kubernetes on a healthy node.
+
+-> Automated horizontal scaling in the node and container (pod) scope
+Kubernetes allows you to bring up new nodes and automatically add them to your cluster. If a single service is resource constrained, Kubernetes will detect this and bring up new instances to handle the additional load. 
+
+
+=> Kubernetes Control Plane Components
+
+-> The control plane is the powerhouse of a Kubernetes cluster. It ensures that every component in the cluster is kept in the desired state. It receives data about internal cluster events, external systems, and third-party applications, then processes the data and makes and executes decisions in response.
+
+-> The control plane manages and maintains the worker nodes that hold the containerized applications. 
+
+Components of the Control Plane:
+
+-> kube-apiserver: The API server is the interface that the control plane uses to interact with the worker nodes and external systems and users. 
+
+-> etcd : etcd is a reliable key-value data store that is used to persistently store all cluster data in a distributed manner.
+It is a separate open source service in the Cloud Native Computing Foundation (CNCF) ecosystem.
+
+-> kube-scheduler: kube-scheduler allocates new pods to the worker nodes. Additionally, it distributes resources and workload across the worker nodes.
+
+-> kube-controller-manager:
+
+The control plane has four control loops called controller processes, which watch the state of the cluster and try to modify the current state of the cluster to match the desired state. The kube-controller-manager runs and manages the controller processes in a cluster. To reduce the complexity of managing them, the controllers are run in a single process:
+
+--> node controller : The node controller manages the nodes. It restarts any node that shuts down.
+--> job controller : The job controller notices on-off tasks and creates pods to run those tasks.
+--> endpoints controller : The endpoints controller creates the endpoint objects to expose the pods externally.
+--> service account controller and token controller : The service account controller and token controller create default accounts and API access tokens to authorize access to new namespaces, as you need an account and an API access token to interact with a newly created namespace.
+
+-> cloud-controller-manager:
+The cloud-controller-manager is a separate component that connects the cluster to the API of the underlying cloud infrastructure. It runs only the controllers specific to the cloud provider, such as Amazon Web Services, Azure, or Google Cloud Platform.
+
+
+=> Various methods through which K8s can be installed
+
+-> Kubernetes Installation Options: Kubedm, MiniKube, Managed K8s (EKS, AKS, GKE)

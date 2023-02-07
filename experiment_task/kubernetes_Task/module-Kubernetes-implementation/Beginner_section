@@ -1,0 +1,95 @@
+=> Create and configure basic Pods
+
+-> nginx_pod.yml
+Note: It is created in a seperate page.
+
+=> multi-container pod
+
+-> multi-container_pod.yml
+Note: It is created in a seperate page.
+
+=> Labels, Selectors, and annotations
+
+-> Labels:
+Labels are key-value pairs which are attached to pods, replication controller and services. They are used as identifying attributes for objects such as pods and replication controller. They can be added to an object at creation time and can be added or modified at the run time.
+
+e.g: 
+metadata:
+  name: metadata-demo
+  labels:
+    environment: demo
+    app: nginx
+
+-> Selectors
+Labels do not provide uniqueness. In general, we can say many objects can carry the same labels. Labels selector are core grouping primitive in Kubernetes. They are used by the users to select a set of objects.
+
+Kubernetes API currently supports two type of selectors −
+
+1. Equality-based selectors
+2. Set-based selectors
+
+--> 1. Equality-based Selectors
+They allow filtering by key and value. Matching objects should satisfy all the specified labels.
+
+--> 2. Set-based Selectors
+Set-based selectors allow filtering of keys according to a set of values.
+
+e.g:
+   selector:
+      app: salesplatform ---------> 1
+      component: neo4j -----------> 2
+
+Referance: https://www.tutorialspoint.com/kubernetes/kubernetes_labels_selectors.htm
+
+-> Annotations
+Annotations are used for “non-identifying information” i.e., metadata that Kubernetes does not care about. As such, annotation keys and values have no constraints. Thus, if you want to add information for other humans about a given resource, then annotations are a better choice.
+
+e.g:
+metadata:
+  name: quote
+  annotations:
+    a8r.io/owner: “@sally”
+    a8r.io/repository: "https://github.com/ambassadorlabs/k8s-for-humans/"
+
+
+
+=> Deployments and Replica-Sets
+
+-> Deployments:
+A deployment is a higher abstraction that manages one or more ReplicaSets to provide a controlled rollout of a new version. When the image version is changed in the Deployment, a new ReplicaSet for this version will be created with initially zero replicas. Then it will be scaled to one replica, after that is running, the old ReplicaSet will be scaled down. (The number of newly created pods, the step size so to speak, can be tuned.)
+
+
+-> ReplicaSet: 
+A ReplicaSet ensures that a number of Pods is created in a cluster. The pods are called replicas and are the mechanism of availability in Kubernetes. But changing the ReplicaSet will not take effect on existing Pods, so it is not possible to easily change, for example, the image version.
+
+=> How to perform rolling updates
+
+-> Gradually replaces pod instances with newer versions to ensure there are enough new pods to maintain the availability threshold before terminating old pods. Such a phased replacement ensures there is always a minimum number of available pods that enable a safe rollout of updates without causing any downtime. 
+
+type: RollingUpdate
+ rollingUpdate:
+  maxSurge: 3
+  maxUnavailable: 1
+  timeoutSeconds: 100
+  intervalSeconds: 5
+  updatePeriodSeconds: 5
+
+
+=> How to perform rollbacks
+
+-> Sometimes, due to a breaking change, we may want to rollback a Deployment and Kubernetes By default maintain Deployment’s rollout history so that we can rollback anytime we want.
+
+$ kubectl rollout history deployment/app
+$ kubectl rollout undo deployment.apps/demo-app --to-revision=old_version
+
+Referance: https://blog.saeloun.com/2022/06/06/kubernetes-rollback.html
+https://learnk8s.io/kubernetes-rollbacks
+
+
+=> Services (ClusterIP / NodePort / Load Balancer )
+
+-> ClusterIP: Exposes the service on a cluster-internal IP. Choosing this value makes the service only reachable from within the cluster. This is the default ServiceType.
+
+-> NodePort: Exposes the service on each Node’s IP at a static port (the NodePort). A ClusterIP service, to which the NodePort service will route, is automatically created. You’ll be able to contact the NodePort service, from outside the cluster, by requesting <NodeIP>:<NodePort>.
+
+-> LoadBalancer: Exposes the service externally using a cloud provider’s load balancer. NodePort and ClusterIP services, to which the external load balancer will route, are automatically created.
